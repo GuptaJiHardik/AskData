@@ -1,0 +1,32 @@
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Python and development tools
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+test-results/
+reports/
+
+# Frontend artifacts
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Local inputs and generated lockfile
+/data/
+/uv.lock
