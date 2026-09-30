@@ -44,8 +44,8 @@ If the files disagree, do not silently choose one. Inspect the repository, prese
 | Active phase | P0 — Repository and Project Foundation |
 | Phase status | In progress |
 | Implemented phase paths | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile` |
-| Phase verification | Python 3.12.14, uv 0.12.9, Git 2.53.0.windows.2, GNU Make 4.4.1 verified; `uv sync --extra dev`, `make lint`, `make typecheck`, `make test`, ignore probes, and `git diff --check` passed. Initial commit and remote push pending. |
-| Repository metadata | Git initialized on `main`; no commit or remote yet |
+| Phase verification | Python 3.12.14, uv 0.12.9, Git 2.53.0.windows.2, GNU Make 4.4.1 verified; `uv sync --extra dev`, `make lint`, `make typecheck`, `make test`, ignore probes, and staged `git diff --check` passed. Root commit `fce3de2` created; remote push pending. |
+| Repository metadata | Git `main`, root commit `fce3de2`; no remote yet |
 | Available tools | Git `2.53.0.windows.2`; `uv 0.12.9`; managed Python 3.12.14; GNU Make 4.4.1 (refresh PATH in shells launched before installation) |
 | Local data | Nine supplied Olist CSVs under `data/`; preserve locally and exclude from Git |
 | Existing project documents | `SPEC.md`, `askdata-impl-plan.md`, `AGENTS.md`, `codex.md` |
@@ -121,7 +121,7 @@ The adapted `typecheck` and `test` recipes preserve the four-file boundary while
 - [x] The supplied CSV files remain untouched and untracked.
 - [x] `README.md` identifies Phase 0 as active and points to the living plan and handoff.
 - [x] `askdata-impl-plan.md` and this file record actual paths, approved deviations, and exact verification results.
-- [ ] The initial commit contains only the intended project and governance files.
+- [x] The initial commit contains only the intended project and governance files.
 - [ ] The user-confirmed Git remote is configured and the initial commit is pushed.
 
 Do not mark P0 complete until every item passes. If the remote URL or push authorization is still absent, leave P0 in progress and record the exact blocker. Do not start P1 until P0 is complete and the user explicitly asks to continue.
@@ -136,6 +136,7 @@ Do not mark P0 complete until every item passes. If the remote URL or push autho
 | 2026-09-30 | P0 | Installed managed Python, initialized Git on `main`, and created the four P0 project files | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile`, `.git/` | `uv python install 3.12`: exit 0, installed 3.12.14; `git init -b main`: exit 0; `uv --version`: 0.12.9; `git --version`: 2.53.0.windows.2. `uv run python --version` blocked by user-cache access in the sandbox; retry with approved elevation pending. |
 | 2026-09-30 | P0 | Installed GNU Make from `ezwinports.make`, synced dependencies under Python 3.12, and corrected the empty-project Mypy match | `Makefile` | `winget install --id GnuWin32.Make --exact`: failed, SourceForge timeout; `winget install --id ezwinports.make --exact --accept-package-agreements --accept-source-agreements`: exit 0; `make --version`: GNU Make 4.4.1; `uv run --python 3.12 python --version`: 3.12.14; `uv sync --extra dev --python 3.12`: exit 0; `make lint`: passed; `make test`: passed, zero tests; first `make typecheck`: exit 2 because Mypy omitted the assumed `mypy: error:` prefix. Corrected recipe; rerun pending. |
 | 2026-09-30 | P0 | Verified the corrected P0 foundation and ignore boundary | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile`, `askdata-impl-plan.md`, `codex.md` | `uv run python --version`: Python 3.12.14; `uv sync --extra dev`: exit 0; `make lint`: exit 0, all checks passed; `make typecheck`: exit 0, only exact `There are no .py[i] files in directory '.'` message accepted; `make test`: exit 0, zero collected, Pytest exit 5 accepted; `git check-ignore -v` probes: exit 0 for `.env.local`, `.venv`, Python/tool caches, generated reports, frontend artifacts, `uv.lock`, and existing `data/olist_customers_dataset.csv`; `git check-ignore -q .env.example`: exit 1 (not ignored); `git status --short --ignored`: eight intended files untracked, `.pytest_cache/`, `.ruff_cache/`, `.venv/`, `data/`, and `uv.lock` ignored; nine CSVs present; `git diff --check`: exit 0. |
+| 2026-09-30 | P0 | Created and inspected the initial commit | `.git/`, eight intended tracked files | `git diff --cached --check`: exit 0 after removing whitespace from governance files; `git diff --cached --name-only`: exactly `.gitignore`, `AGENTS.md`, `Makefile`, `README.md`, `SPEC.md`, `askdata-impl-plan.md`, `codex.md`, `pyproject.toml`; `git commit -m "Initialize P0 repository foundation"`: exit 0, root commit `fce3de2`; `git show --format=fuller --stat --oneline HEAD`: eight files, no CSV or generated artifacts; `git status --short --ignored`: only `.pytest_cache/`, `.ruff_cache/`, `.venv/`, `data/`, and `uv.lock` ignored. |
 
 ## Update protocol
 
@@ -162,3 +163,4 @@ After every implementation change, update this file in the same task:
 | 2026-09-30 | P0 | Decision | Created only the four P0 project files. The Make recipes contain temporary empty-project handling for Mypy's exact no-source message and Pytest's exit 5; replace them when a later authorized phase adds code and tests. |
 | 2026-09-30 | P0 | Decision | `GnuWin32.Make` download timed out, so installed GNU Make 4.4.1 from winget package `ezwinports.make`. User PATH was refreshed for verification. |
 | 2026-09-30 | P0 | Blocker | Initial commit remains to be created. The Git remote URL and explicit push authorization have been requested; P0 remains in progress until the commit is pushed and verified. |
+| 2026-09-30 | P0 | Decision | Root commit `fce3de2` contains only the eight intended files. A follow-up documentation commit records its verified result; both commits require a remote push before P0 completion. |
