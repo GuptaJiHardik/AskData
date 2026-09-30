@@ -1,9 +1,9 @@
 # AskData — Codex Session Handoff
 
 **Last updated:** 2026-09-30
-**Project status:** P0 foundation implementation in progress; application implementation has not started.
+**Project status:** P0 foundation complete and pushed; application implementation has not started.
 **Active implementation phase:** P0 — Repository and Project Foundation
-**Phase status:** In progress.
+**Phase status:** Complete; await an explicit request before advancing to P1.
 
 ## Purpose
 
@@ -42,10 +42,10 @@ If the files disagree, do not silently choose one. Inspect the repository, prese
 |---|---|
 | Application code | None |
 | Active phase | P0 — Repository and Project Foundation |
-| Phase status | In progress |
+| Phase status | Complete |
 | Implemented phase paths | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile` |
-| Phase verification | Python 3.12.14, uv 0.12.9, Git 2.53.0.windows.2, GNU Make 4.4.1 verified; `uv sync --extra dev`, `make lint`, `make typecheck`, `make test`, ignore probes, and staged `git diff --check` passed. Root commit `fce3de2` created; remote push pending. |
-| Repository metadata | Git `main`, root commit `fce3de2`, verification commit `15cc772`; `origin` is `https://github.com/GuptaJiHardik/AskData.git`; remote `main` absent on read-only check |
+| Phase verification | Python 3.12.14, uv 0.12.9, Git 2.53.0.windows.2, GNU Make 4.4.1 verified; `uv sync --extra dev`, `make lint`, `make typecheck`, `make test`, ignore probes, and staged `git diff --check` passed. `git push -u origin main` passed; remote `main` matched local `908d466` and the working tree was clean before this ledger update. |
+| Repository metadata | Git `main`, root commit `fce3de2`; `origin` is `https://github.com/GuptaJiHardik/AskData.git` and tracks `origin/main` |
 | Available tools | Git `2.53.0.windows.2`; `uv 0.12.9`; managed Python 3.12.14; GNU Make 4.4.1 (refresh PATH in shells launched before installation) |
 | Local data | Nine supplied Olist CSVs under `data/`; preserve locally and exclude from Git |
 | Existing project documents | `SPEC.md`, `askdata-impl-plan.md`, `AGENTS.md`, `codex.md` |
@@ -122,7 +122,7 @@ The adapted `typecheck` and `test` recipes preserve the four-file boundary while
 - [x] `README.md` identifies Phase 0 as active and points to the living plan and handoff.
 - [x] `askdata-impl-plan.md` and this file record actual paths, approved deviations, and exact verification results.
 - [x] The initial commit contains only the intended project and governance files.
-- [ ] The user-confirmed Git remote is configured and the initial commit is pushed. `origin` is configured; explicit push authorization and push verification remain.
+- [x] The user-confirmed Git remote is configured and the initial commit is pushed.
 
 Do not mark P0 complete until every item passes. If the remote URL or push authorization is still absent, leave P0 in progress and record the exact blocker. Do not start P1 until P0 is complete and the user explicitly asks to continue.
 
@@ -138,6 +138,7 @@ Do not mark P0 complete until every item passes. If the remote URL or push autho
 | 2026-09-30 | P0 | Verified the corrected P0 foundation and ignore boundary | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile`, `askdata-impl-plan.md`, `codex.md` | `uv run python --version`: Python 3.12.14; `uv sync --extra dev`: exit 0; `make lint`: exit 0, all checks passed; `make typecheck`: exit 0, only exact `There are no .py[i] files in directory '.'` message accepted; `make test`: exit 0, zero collected, Pytest exit 5 accepted; `git check-ignore -v` probes: exit 0 for `.env.local`, `.venv`, Python/tool caches, generated reports, frontend artifacts, `uv.lock`, and existing `data/olist_customers_dataset.csv`; `git check-ignore -q .env.example`: exit 1 (not ignored); `git status --short --ignored`: eight intended files untracked, `.pytest_cache/`, `.ruff_cache/`, `.venv/`, `data/`, and `uv.lock` ignored; nine CSVs present; `git diff --check`: exit 0. |
 | 2026-09-30 | P0 | Created and inspected the initial commit | `.git/`, eight intended tracked files | `git diff --cached --check`: exit 0 after removing whitespace from governance files; `git diff --cached --name-only`: exactly `.gitignore`, `AGENTS.md`, `Makefile`, `README.md`, `SPEC.md`, `askdata-impl-plan.md`, `codex.md`, `pyproject.toml`; `git commit -m "Initialize P0 repository foundation"`: exit 0, root commit `fce3de2`; `git show --format=fuller --stat --oneline HEAD`: eight files, no CSV or generated artifacts; `git status --short --ignored`: only `.pytest_cache/`, `.ruff_cache/`, `.venv/`, `data/`, and `uv.lock` ignored. |
 | 2026-09-30 | P0 | Configured the user-supplied GitHub remote and inspected its `main` branch | `.git/config`, `askdata-impl-plan.md`, `codex.md` | `git remote add origin https://github.com/GuptaJiHardik/AskData.git`: exit 0; `git remote -v`: fetch and push URL both match; `git ls-remote --heads origin main`: exit 0 with no branch; `git status --short --branch`: `## main` with clean tree before these ledger updates. |
+| 2026-09-30 | P0 | Pushed the authorized P0 commits and verified remote tracking | `.git/config`, `askdata-impl-plan.md`, `codex.md` | User replied `yes` to the explicit push request; `git push -u origin main`: exit 0, new remote branch and upstream set; `git ls-remote --heads origin main`: exit 0, `908d4667c402dafebccf086a079c177d41e705fc`; `git rev-parse HEAD`: same hash; `git status --short --branch`: `## main...origin/main`, clean before final ledger update. |
 
 ## Update protocol
 
@@ -166,3 +167,4 @@ After every implementation change, update this file in the same task:
 | 2026-09-30 | P0 | Blocker | Initial commit remains to be created. The Git remote URL and explicit push authorization have been requested; P0 remains in progress until the commit is pushed and verified. |
 | 2026-09-30 | P0 | Decision | Root commit `fce3de2` contains only the eight intended files. A follow-up documentation commit records its verified result; both commits require a remote push before P0 completion. |
 | 2026-09-30 | P0 | Blocker | The user supplied `https://github.com/GuptaJiHardik/AskData` and it is configured as `origin`. Explicit authorization to push was requested separately, as required by this P0 snapshot; do not push until received. |
+| 2026-09-30 | P0 | Resolution | The user explicitly authorized the push. P0 acceptance criteria passed; keep P0 as the active completed phase until the user explicitly requests P1. |

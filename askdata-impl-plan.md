@@ -203,7 +203,7 @@ Green phases can proceed in parallel once their shared prerequisites are complet
 
 | Active phase | Status | Implemented paths | Verification | Notes |
 | --- | --- | --- | --- | --- |
-| P0 | In progress | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile`; Git metadata on `main` | `uv python install 3.12`: exit 0, Python 3.12.14; `uv --version`: 0.12.9; `git --version`: 2.53.0.windows.2; `make --version`: GNU Make 4.4.1; `git init -b main`: exit 0; `uv run python --version`: Python 3.12.14; `uv sync --extra dev`: exit 0; `make lint`: exit 0; `make typecheck`: exit 0 for exact Mypy no-source diagnostic; `make test`: exit 0 for Pytest exit 5, zero tests; `git check-ignore -v` probes: exit 0 for all required local/generated paths and an Olist CSV; `git check-ignore -q .env.example`: exit 1, exception works; `git diff --cached --check`: exit 0; `git commit -m "Initialize P0 repository foundation"`: exit 0, root commit `fce3de2`, exactly eight intended files; `git remote -v`: `origin` points to user-supplied GitHub URL; `git ls-remote --heads origin main`: exit 0, no remote `main`. | Four-file boundary retained; nine CSVs untouched and ignored. GNU Make 4.4.1 installed via `ezwinports.make` after `GnuWin32.Make` download timed out. Temporary P0 Make adaptations accept only Mypy's exact empty-source diagnostic and Pytest exit 5. Explicit push authorization requested; no push performed yet. |
+| P0 | Complete | `pyproject.toml`, `.gitignore`, `README.md`, `Makefile`; Git metadata on `main` | `uv python install 3.12`: exit 0, Python 3.12.14; `uv --version`: 0.12.9; `git --version`: 2.53.0.windows.2; `make --version`: GNU Make 4.4.1; `git init -b main`: exit 0; `uv run python --version`: Python 3.12.14; `uv sync --extra dev`: exit 0; `make lint`: exit 0; `make typecheck`: exit 0 for exact Mypy no-source diagnostic; `make test`: exit 0 for Pytest exit 5, zero tests; `git check-ignore -v` probes: exit 0 for all required local/generated paths and an Olist CSV; `git check-ignore -q .env.example`: exit 1; `git diff --cached --check`: exit 0; root commit `fce3de2` contains exactly eight intended files; `git push -u origin main`: exit 0; `git ls-remote --heads origin main`: exit 0, `908d4667c402dafebccf086a079c177d41e705fc`, matching `git rev-parse HEAD`; `git status --short --branch`: `## main...origin/main`, clean. | Four-file boundary retained; nine CSVs untouched and ignored. GNU Make 4.4.1 installed via `ezwinports.make` after `GnuWin32.Make` download timed out. Temporary P0 Make adaptations accept only Mypy's exact empty-source diagnostic and Pytest exit 5. User explicitly authorized the push. Await a separate request before starting P1. |
 
 ---
 
@@ -380,7 +380,7 @@ test:
 - [x] This plan records Phase 0 verification results before Phase 1 begins
 - [x] Initial commit `fce3de2` contains only the four P0 files and four existing governance documents
 - [x] User-supplied Git remote `https://github.com/GuptaJiHardik/AskData.git` configured as `origin`; read-only check found no remote `main`
-- [ ] Git remote configured and initial commit pushed
+- [x] Git remote configured and initial commit pushed
 
 ## Phase 1 Infrastructure and Docker Setup
 
